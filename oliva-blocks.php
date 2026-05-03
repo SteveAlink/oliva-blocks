@@ -17,9 +17,4 @@ $olivaBlocks = new OlivaBlocks($Wcms);
 $Wcms->addListener('settings', [$olivaBlocks, 'handleSettings']);
 $Wcms->addListener('footer', [$olivaBlocks, 'renderBlocks']);
 $Wcms->addListener('css', [$olivaBlocks, 'renderCss']);
-$Wcms->addListener('js', 'olivaBlocksJs');
-
-function olivaBlocksJs()
-{
-    echo '<script src="' . BASE_URL . '/plugins/oliva-blocks/js/oliva-blocks.js"></script>';
-}
+$Wcms->addListener('js', [$olivaBlocks, 'renderJs']);
