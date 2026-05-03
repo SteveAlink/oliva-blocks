@@ -17,6 +17,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
+v0.1.2 03-05-2026 Check if value passed missing, causing blank screen   
 v0.1.1 03-05-2026 Something wrong with one of the programs causing blank screen  
 v0.1.0 03-05-2026 Initial version
 
@@ -28,3 +29,7 @@ This first version is deliberately small:
 Version 0.1.1 Contains bug solution
 
 - Previous version caused a blank screen to be shown in the frontend due to incorrect usage of statement Echo.
+
+Version 0.1.2 Contains bug solution
+
+- In previous version a new bug was entered, and didn't pass values where it should be. Blank screen shown on frontend.
