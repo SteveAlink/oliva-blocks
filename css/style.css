@@ -1,0 +1,29 @@
+.oliva-blocks {
+    margin: 20px 0;
+}
+
+.ob-block {
+    margin-bottom: 20px;
+}
+
+.ob-text {
+    font-size: 16px;
+}
+
+.ob-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ob-text-image {
+    display: flex;
+    gap: 20px;
+}
+
+.ob-text-image .ob-text {
+    flex: 1;
+}
+
+.ob-text-image .ob-image {
+    flex: 1;
+}
