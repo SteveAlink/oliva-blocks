@@ -92,7 +92,7 @@ class OlivaBlocks
         $menuItemA->setAttribute('role', 'tab');
         $menuItemA->setAttribute('data-toggle', 'tab');
         $menuItemA->setAttribute('class', 'nav-link');
-        $menuItemA->nodeValue = $this->t('olivaBlocks');
+        $menuItemA->nodeValue = $this->t('OlivaBlocks');
 
         $menuItem->appendChild($menuItemA);
         $menuList->appendChild($menuItem);
