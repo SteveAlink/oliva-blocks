@@ -47,7 +47,7 @@ class OlivaBlocks
 
     private function getBlocksData()
     {
-        $currentJson = $this->Wcms->get('config', 'oliva_blocks_data');
+        $currentJson = $this->Wcms->get('config', 'olivaBlocksData');
         if (!$currentJson) {
             $currentJson = "[]";
         }
@@ -110,7 +110,7 @@ class OlivaBlocks
         $form->appendChild($title);
 
         // Prepare a field to hold the json code
-        $form->appendChild($this->createTextarea($doc, 'oliva_blocks_json', $this->getBlocksData()));
+        $form->appendChild($this->createTextarea($doc, 'oliva_blocks_json', $this->getBlocksData(), 12));
 
         $saveButton = $doc->createElement('button');
         $saveButton->setAttribute('type', 'submit');
@@ -144,8 +144,10 @@ class OlivaBlocks
             json_decode($json, true);
         
             if (json_last_error() === JSON_ERROR_NONE) {
-                $this->Wcms->set('config', 'oliva_blocks_data', $json);
-//                $this->Wcms->save();
+                $this->Wcms->set('config', 'olivaBlocksData', $json);
+            }
+            else {
+    			$this->Wcms->alert('danger', 'Content not saved on Oliva Blocks as rules of data validation not followed. Due to: '.json_last_error());
             }
         }
 
