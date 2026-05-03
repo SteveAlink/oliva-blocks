@@ -23,14 +23,13 @@ class OlivaBlocks
 
         $map = [
             'en' => 'en_US',
-            'nl' => 'nl_NL'
-        ];
-/*
+            'nl' => 'nl_NL',
             'es' => 'es_ES',
             'de' => 'de_DE',
             'fr' => 'fr_FR',
             'it' => 'it_IT'
-*/
+        ];
+
         $langCode = $map[$adminLang] ?? 'en_US';
         $file = __DIR__ . '/languages/' . $langCode . '.ini';
 
