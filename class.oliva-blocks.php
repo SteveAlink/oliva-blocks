@@ -249,11 +249,15 @@ class OlivaBlocks
 
     public function renderBlocks($args)
     {
-        $blocks = $this->getBlocksArray();
-    
-        if (empty($blocks)) {
+        if (!isset($args[0])) {
             return $args;
         }
+    
+        if (strpos($args[0], '{{OlivaBlocks}}') === false) {
+            return $args;
+        }
+    
+        $blocks = $this->getBlocksArray();
     
         $html = '<div class="oliva-blocks">';
     
@@ -263,7 +267,7 @@ class OlivaBlocks
     
         $html .= '</div>';
     
-        $args[0] .= $html;
+        $args[0] = str_replace('{{OlivaBlocks}}', $html, $args[0]);
     
         return $args;
     }
