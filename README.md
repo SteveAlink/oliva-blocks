@@ -10,7 +10,11 @@ this plugin is also able to support images that will be placed on various pages.
 Use ```{{OlivaBlocks}}``` on any page to render the blocks. This will show all blocks on the page.  
 Use ```{{OlivaBlocks|Queens}}``` to show only the blocks of information that have as block code 'Queens'.  
 Be aware that the block code is case sensitive, so Queens is a different code from queens.  
-You can leave the block code blank.
+You can leave the block code blank.  
+Reordering of a block is possible using the indicated buttons.  
+
+## Note
+If the placeholder ```{{OlivaBlocks|...}}``` is used, the block information will be inserted in the page. So it replaces the placeholder.
 
 ## Preview of the settings for this plugin:
 <img width="1999" height="1659" alt="WcmsOlivaBlocksPreviewSettings050" src="https://github.com/user-attachments/assets/06229928-9711-4f36-91cf-370564ba4924" />
@@ -21,7 +25,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
-v0.6.0 04-05-2026 Included more language for backend: DE, FR, IT, ES  
+v0.6.0 04-05-2026 Included more language for backend: DE, FR, IT, ES. Reordering of information  
 v0.5.0 04-05-2026 Allow selection of blocks using a code  
 v0.4.0 04-05-2026 Rendering on frontend can now use ```{{OlivaBlocks}}``` in any page. So moved out of footer  
 v0.3.0 04-05-2026 Rendering the blocks on the frontend on footer  
@@ -65,4 +69,5 @@ Version 0.5.0 Includes a code to connect to blocks of information
 Version 0.6.0 Translations and validations
 
 - Four languages are now included for the backend  
-- Validation build in to check if correct fields are filled  
+- Validation build in to check if correct fields are filled
+- New Up and Down button to move blocks in correct sequence
