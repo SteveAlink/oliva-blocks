@@ -246,28 +246,26 @@ class OlivaBlocks
                 $editBtn->setAttribute('value', $index);
                 $editBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-info');
                 $editBtn->setAttribute('title', $this->t('editButton'));
-                $editBtn->setAttribute('style', 'margin-right:5px;');
+                $editBtn->setAttribute('style', 'margin-left:5px;');
                 $div->appendChild($editBtn);
 
                 // Include move buttons
                 if ($index > 0) {
-                    $upBtn = $doc->createElement('button', $this->t('moveUpButton'));
+                    $upBtn = $doc->createElement('button', '');
                     $upBtn->setAttribute('type', 'submit');
                     $upBtn->setAttribute('name', 'move_block_up');
                     $upBtn->setAttribute('value', $index);
                     $upBtn->setAttribute('class', 'arrowIcon upArrowIcon');
-//                    $upBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-info');
                     $upBtn->setAttribute('style', 'margin-left:10px;');
                     $div->appendChild($upBtn);
                 }
                 
                 if ($index < count($blocks) - 1) {
-                    $downBtn = $doc->createElement('button', $this->t('moveDownButton'));
+                    $downBtn = $doc->createElement('button', '');
                     $downBtn->setAttribute('type', 'submit');
                     $downBtn->setAttribute('name', 'move_block_down');
                     $downBtn->setAttribute('value', $index);
                     $downBtn->setAttribute('class', 'arrowIcon downArrowIcon');
-//                  $downBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-info');
                     $downBtn->setAttribute('style', 'margin-left:10px;');
                     $div->appendChild($downBtn);
                 }
@@ -278,18 +276,45 @@ class OlivaBlocks
                 $deleteBtn->setAttribute('name', 'delete_block');
                 $deleteBtn->setAttribute('value', $index);
                 $deleteBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-danger');
-                $deleteBtn->setAttribute('style', 'margin-left:10px;');
+                $deleteBtn->setAttribute('style', 'margin-left:10px; margin-right:5px;');
                 $div->appendChild($deleteBtn);
         
-                $text = 'Code: ' . ($block['code'] ?? '') . ' | Type: ' . ($block['type'] ?? '');
+                $code = $block['code'] ?? '-';
+                $type = strtoupper($block['type'] ?? '');
+                
+                $text = '[' . $code . '] ' . $type;
+                
+                // second line depending on type
+                if (!empty($block['text'])) {
+                    $text .= "\n" . $block['text'];
+                }
+                
+                if (!empty($block['url'])) {
+                    $text .= "\n" . $block['url'];
+                }
                 if (!empty($block['text'])) {
                     $text .= ' | Text: ' . $block['text'];
                 }
                 if (!empty($block['url'])) {
                     $text .= ' | URL: ' . $block['url'];
                 }
-                $div->appendChild($doc->createTextNode($text));
-
+                // Make sure there is a proper line break
+                $lines = explode("\n", $text);
+                
+                foreach ($lines as $i => $line) {
+                    if ($i > 0) {
+                        $div->appendChild($doc->createElement('br'));
+                    }
+                    // Make the url clickable
+                    if (filter_var($line, FILTER_VALIDATE_URL)) {
+                        $a = $doc->createElement('a', $line);
+                        $a->setAttribute('href', $line);
+                        $a->setAttribute('target', '_blank'); // Show hyperlink content in new tab
+                        $div->appendChild($a);
+                    } else {
+                        $div->appendChild($doc->createTextNode($line));
+                    }
+                }
                 $form->appendChild($div);
             }
         }
