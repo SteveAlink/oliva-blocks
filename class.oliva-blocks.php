@@ -256,6 +256,7 @@ class OlivaBlocks
                     $upBtn->setAttribute('name', 'move_block_up');
                     $upBtn->setAttribute('value', $index);
                     $upBtn->setAttribute('class', 'arrowIcon upArrowIcon');
+                    $upBtn->setAttribute('title', $this->t('moveUpButton'));
                     $upBtn->setAttribute('style', 'margin-left:10px;');
                     $div->appendChild($upBtn);
                 }
@@ -266,6 +267,7 @@ class OlivaBlocks
                     $downBtn->setAttribute('name', 'move_block_down');
                     $downBtn->setAttribute('value', $index);
                     $downBtn->setAttribute('class', 'arrowIcon downArrowIcon');
+                    $downBtn->setAttribute('title', $this->t('moveDownButton'));
                     $downBtn->setAttribute('style', 'margin-left:10px;');
                     $div->appendChild($downBtn);
                 }
@@ -276,6 +278,7 @@ class OlivaBlocks
                 $deleteBtn->setAttribute('name', 'delete_block');
                 $deleteBtn->setAttribute('value', $index);
                 $deleteBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-danger');
+                $deleteBtn->setAttribute('title', $this->t('deleteButton'));
                 $deleteBtn->setAttribute('style', 'margin-left:10px; margin-right:5px;');
                 $div->appendChild($deleteBtn);
         
