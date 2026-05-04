@@ -312,10 +312,22 @@ class OlivaBlocks
         return '';
     }
 
+
+    function olivaBlocksPluginBasePath()
+    {
+        return 'plugins/oliva-blocks/';
+    }
+
     public function renderCss($args)
     {
-        $args[0] .= '<link rel="stylesheet" href="' . BASE_URL . '/plugins/oliva-blocks/css/style.css">';
-    
+        $css = '<link rel="stylesheet" href="' . $this->olivaBlocksPluginBasePath() . 'css/style.css" type="text/css">';
+
+        if (isset($args[0]) && is_array($args[0])) {
+            $args[0][] = $css;
+        } else {
+            $args[0] = ($args[0] ?? '') . $css;
+        }
+
         return $args;
     }
 
