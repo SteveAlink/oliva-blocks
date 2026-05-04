@@ -122,9 +122,7 @@ class OlivaBlocks
         $title = $doc->createElement('h2', $this->t('headingBlocksSettings'));
         $form->appendChild($title);
 
-        // Prepare a field to hold the json code
-//        $form->appendChild($this->createTextarea($doc, 'oliva_blocks_json', $this->getBlocksData(), 12));
-        // Block type
+        // Selection of type of block
         $typeLabel = $doc->createElement('label', 'Block type');
         $form->appendChild($typeLabel);
         
@@ -139,8 +137,18 @@ class OlivaBlocks
         }
         
         $form->appendChild($typeSelect);
+
+        // The code connected to this block
+        $codeLabel = $doc->createElement('label', $this->t('blockCode'));
+        $form->appendChild($codeLabel);
         
-        // Text field
+        $codeInput = $doc->createElement('input');
+        $codeInput->setAttribute('type', 'text');
+        $codeInput->setAttribute('name', 'oliva_block_code');
+        $codeInput->setAttribute('class', 'form-control');
+        $form->appendChild($codeInput);        
+
+        // Content of Text field
         $textLabel = $doc->createElement('label', 'Text');
         $form->appendChild($textLabel);
         
@@ -160,16 +168,31 @@ class OlivaBlocks
         $urlInput->setAttribute('class', 'form-control');
         $form->appendChild($urlInput);
         
-        // spacing
+        $saveButton = $doc->createElement('button');
+        $saveButton->setAttribute('type', 'submit');
+        $saveButton->setAttribute('name', 'saveOlivaBlocksSettings');
+        $saveButton->setAttribute('class', 'btn btn-primary');
+        $saveButton->nodeValue = $this->t('saveButton');
+
+        $form->appendChild($saveButton);
+
+        // Spacing
         $form->appendChild($doc->createElement('br'));
         $blocks = $this->getBlocksArray();
-        
+
+        // Check if we want to see the save button already
+        $blockCount = is_array($blocks) ? count($blocks) : 0;
+        if ($blockCount > 5) {
+            $form->appendChild($saveButton->cloneNode(true));
+            $form->appendChild($doc->createElement('br'));
+        }
+
         if (!empty($blocks)) {
             foreach ($blocks as $index => $block) {
                 $div = $doc->createElement('div');
                 $div->setAttribute('style', 'border:1px solid #ccc;padding:10px;margin-bottom:10px;');
         
-                $text = 'Type: ' . ($block['type'] ?? '');
+                $text = 'Code: ' . ($block['code'] ?? '') . ' | Type: ' . ($block['type'] ?? '');
                 if (!empty($block['text'])) {
                     $text .= ' | Text: ' . $block['text'];
                 }
@@ -192,12 +215,9 @@ class OlivaBlocks
                 $form->appendChild($div);
             }
         }
-        $saveButton = $doc->createElement('button');
-        $saveButton->setAttribute('type', 'submit');
-        $saveButton->setAttribute('name', 'saveOlivaBlocksSettings');
-        $saveButton->setAttribute('class', 'btn btn-primary');
-        $saveButton->nodeValue = $this->t('saveButton');
 
+        // Another save button to allow scrolling before saving the content of the fields
+        $form->appendChild($doc->createElement('br'));
         $form->appendChild($saveButton);
 
         $wrapper->appendChild($form);
@@ -232,10 +252,12 @@ class OlivaBlocks
         if (isset($_POST['saveOlivaBlocksSettings'])) {
         
             $type = $_POST['oliva_block_type'] ?? 'text';
+            $code = trim($_POST['oliva_block_code'] ?? '');
             $text = $_POST['oliva_block_text'] ?? '';
             $url  = $_POST['oliva_block_url'] ?? '';
         
             $blocks[] = [
+                'code' => $code,
                 'type' => $type,
                 'text' => $text,
                 'url'  => $url
@@ -253,23 +275,46 @@ class OlivaBlocks
             return $args;
         }
     
-        if (strpos($args[0], '{{OlivaBlocks}}') === false) {
+        if (strpos($args[0], '{{OlivaBlocks') === false) {
             return $args;
         }
     
+        $args[0] = preg_replace_callback(
+            '/\{\{OlivaBlocks(?:\|([^}]+))?\}\}/',
+            function ($matches) {
+                $code = isset($matches[1]) ? trim($matches[1]) : '';
+    
+                return $this->renderBlocksHtml($code);
+            },
+            $args[0]
+        );
+    
+        return $args;
+    }
+
+    private function renderBlocksHtml($code = '')
+    {
         $blocks = $this->getBlocksArray();
+    
+        if (empty($blocks)) {
+            return '';
+        }
     
         $html = '<div class="oliva-blocks">';
     
         foreach ($blocks as $block) {
+            $blockCode = trim($block['code'] ?? '');
+    
+            if ($code !== '' && $blockCode !== $code) {
+                continue;
+            }
+    
             $html .= $this->renderSingleBlock($block);
         }
     
         $html .= '</div>';
     
-        $args[0] = str_replace('{{OlivaBlocks}}', $html, $args[0]);
-    
-        return $args;
+        return $html;
     }
 
     private function renderSingleBlock($block)
