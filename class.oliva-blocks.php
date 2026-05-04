@@ -163,7 +163,7 @@ class OlivaBlocks
         $form->appendChild($textInput);
         
         // URL field
-        $urlLabel = $doc->createElement('label', $this->t('blockURL'));
+        $urlLabel = $doc->createElement('label', $this->t('blockUrl'));
         $form->appendChild($urlLabel);
         
         $urlInput = $doc->createElement('input');
