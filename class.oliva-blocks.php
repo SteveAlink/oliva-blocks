@@ -146,7 +146,11 @@ class OlivaBlocks
         $codeInput->setAttribute('type', 'text');
         $codeInput->setAttribute('name', 'oliva_block_code');
         $codeInput->setAttribute('class', 'form-control');
-        $form->appendChild($codeInput);        
+        $form->appendChild($codeInput);
+
+        $codeHelp = $doc->createElement('p', $this->t('helpBlockCode'));
+        $codeHelp->setAttribute('class', 'small text-muted');
+        $form->appendChild($codeHelp);
 
         // Content of Text field
         $textLabel = $doc->createElement('label', 'Text');
@@ -167,7 +171,11 @@ class OlivaBlocks
         $urlInput->setAttribute('name', 'oliva_block_url');
         $urlInput->setAttribute('class', 'form-control');
         $form->appendChild($urlInput);
-        
+
+        $urlHelp = $doc->createElement('p', $this->t('helpBlockUrl'));
+        $urlHelp->setAttribute('class', 'small text-muted');
+        $form->appendChild($urlHelp);
+
         $saveButton = $doc->createElement('button');
         $saveButton->setAttribute('type', 'submit');
         $saveButton->setAttribute('name', 'saveOlivaBlocksSettings');
