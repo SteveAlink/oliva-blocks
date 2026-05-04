@@ -123,7 +123,7 @@ class OlivaBlocks
         $form->appendChild($title);
 
         // Selection of type of block
-        $typeLabel = $doc->createElement('label', 'Block type');
+        $typeLabel = $doc->createElement('label', $this->t('BlockType'));
         $form->appendChild($typeLabel);
         
         $typeSelect = $doc->createElement('select');
@@ -153,7 +153,7 @@ class OlivaBlocks
         $form->appendChild($codeHelp);
 
         // Content of Text field
-        $textLabel = $doc->createElement('label', 'Text');
+        $textLabel = $doc->createElement('label', $this->t('BlockText'));
         $form->appendChild($textLabel);
         
         $textInput = $doc->createElement('input');
@@ -163,7 +163,7 @@ class OlivaBlocks
         $form->appendChild($textInput);
         
         // URL field
-        $urlLabel = $doc->createElement('label', 'Image URL');
+        $urlLabel = $doc->createElement('label', $this->t('ImageURL'));
         $form->appendChild($urlLabel);
         
         $urlInput = $doc->createElement('input');
@@ -309,12 +309,12 @@ class OlivaBlocks
             $text = $_POST['oliva_block_text'] ?? '';
             $url  = $_POST['oliva_block_url'] ?? '';
             if ($type === 'text' && trim($text) === '') {
-                $this->Wcms->alert('danger', $this->t('errorTextNoText');
+                $this->Wcms->alert('danger', $this->t('errorTextNoText'));
                 return $args;
             }
             
             if ($type === 'image' && trim($url) === '') {
-                $this->Wcms->alert('danger', $this->t('errorImageNoUrl');
+                $this->Wcms->alert('danger', $this->t('errorImageNoUrl'));
                 return $args;
             }
         
