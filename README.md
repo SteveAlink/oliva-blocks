@@ -25,7 +25,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
-v0.6.1 04-05-2026 Missing ) in the code caused a fatal error
+v0.6.1 04-05-2026 Missing ) in the code caused a fatal error  
 v0.6.0 04-05-2026 Included more language for backend: DE, FR, IT, ES. Reordering of information  
 v0.5.0 04-05-2026 Allow selection of blocks using a code  
 v0.4.0 04-05-2026 Rendering on frontend can now use ```{{OlivaBlocks}}``` in any page. So moved out of footer  
@@ -74,3 +74,5 @@ Version 0.6.0 Translations and validations
 - New Up and Down button to move blocks in correct sequence
 
 Version 0.6.1 Missing parenthesis caused a HTTP error 500 to show
+
+- Included more translations
