@@ -9,10 +9,11 @@ This plugin helps you to organize blocks of text that will be use multiple times
 this plugin is also able to support images that will be placed on various pages.  
 Use ```{{OlivaBlocks}}``` on any page to render the blocks. This will show all blocks on the page.  
 Use ```{{OlivaBlocks|Queens}}``` to show only the blocks of information that have as block code 'Queens'.  
-Be aware that the block code is case sensitive, so Queens is a different code from queens.
+Be aware that the block code is case sensitive, so Queens is a different code from queens.  
+You can leave the block code blank.
 
 ## Preview of the settings for this plugin:
-WIP
+<img width="1999" height="1659" alt="WcmsOlivaBlocksPreviewSettings050" src="https://github.com/user-attachments/assets/06229928-9711-4f36-91cf-370564ba4924" />
 
 ## Download the plugin via
 ```text
