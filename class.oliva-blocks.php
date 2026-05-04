@@ -249,11 +249,73 @@ class OlivaBlocks
 
     public function renderBlocks($args)
     {
+        $blocks = $this->getBlocksArray();
+    
+        if (empty($blocks)) {
+            return $args;
+        }
+    
+        $html = '<div class="oliva-blocks">';
+    
+        foreach ($blocks as $block) {
+            $html .= $this->renderSingleBlock($block);
+        }
+    
+        $html .= '</div>';
+    
+        $args[0] .= $html;
+    
         return $args;
+    }
+
+    private function renderSingleBlock($block)
+    {
+        $type = $block['type'] ?? '';
+        $text = htmlspecialchars($block['text'] ?? '', ENT_QUOTES, 'UTF-8');
+        $url  = htmlspecialchars($block['url'] ?? '', ENT_QUOTES, 'UTF-8');
+    
+        if ($type === 'text') {
+            return '
+                <section class="oliva-block oliva-block-text">
+                    <div class="oliva-block-content">
+                        ' . nl2br($text) . '
+                    </div>
+                </section>
+            ';
+        }
+    
+        if ($type === 'image') {
+            if (!$url) {
+                return '';
+            }
+    
+            return '
+                <section class="oliva-block oliva-block-image">
+                    <img src="' . $url . '" alt="">
+                </section>
+            ';
+        }
+    
+        if ($type === 'text_image') {
+            return '
+                <section class="oliva-block oliva-block-text-image">
+                    <div class="oliva-block-text-column">
+                        ' . nl2br($text) . '
+                    </div>
+                    <div class="oliva-block-image-column">
+                        ' . ($url ? '<img src="' . $url . '" alt="">' : '') . '
+                    </div>
+                </section>
+            ';
+        }
+    
+        return '';
     }
 
     public function renderCss($args)
     {
+        $args[0] .= '<link rel="stylesheet" href="' . BASE_URL . '/plugins/oliva-blocks/css/style.css">';
+    
         return $args;
     }
 
