@@ -292,12 +292,6 @@ class OlivaBlocks
                 if (!empty($block['url'])) {
                     $text .= "\n" . $block['url'];
                 }
-                if (!empty($block['text'])) {
-                    $text .= ' | Text: ' . $block['text'];
-                }
-                if (!empty($block['url'])) {
-                    $text .= ' | URL: ' . $block['url'];
-                }
                 // Make sure there is a proper line break
                 $lines = explode("\n", $text);
                 
