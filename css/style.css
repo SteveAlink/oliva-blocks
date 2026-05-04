@@ -1,29 +1,41 @@
 .oliva-blocks {
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
-.ob-block {
-    margin-bottom: 20px;
+.oliva-block {
+    margin-bottom: 30px;
 }
 
-.ob-text {
-    font-size: 16px;
+.oliva-block-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
 }
 
-.ob-image img {
+.oliva-block-image img {
     max-width: 100%;
     height: auto;
+    display: block;
 }
 
-.ob-text-image {
+.oliva-block-text-image {
     display: flex;
-    gap: 20px;
+    gap: 30px;
+    align-items: center;
 }
 
-.ob-text-image .ob-text {
+.oliva-block-text-column,
+.oliva-block-image-column {
     flex: 1;
 }
 
-.ob-text-image .ob-image {
-    flex: 1;
+.oliva-block-image-column img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .oliva-block-text-image {
+        flex-direction: column;
+    }
 }
