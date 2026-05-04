@@ -25,6 +25,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
+v0.7.1 04-05-2026 Cleaner UI for list of block information  
 v0.7.0 04-05-2026 Introduction of editing of block information  
 v0.6.3 04-05-2026 Forgotten to include translation on Image URL  
 v0.6.2 04-05-2026 Inluded more translations  
@@ -87,3 +88,5 @@ Version 0.7.0 Introduction of editing information
 - Use of standard WonderCMS icons
 - Including more translations
 - Change in order of showing buttons per block information row
+
+Version 0.7.1 Cleaner use of icons in list of block information
