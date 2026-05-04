@@ -54,6 +54,19 @@ class OlivaBlocks
         return $currentJson;
     }
 
+    private function getBlocksArray()
+    {
+        $json = $this->getBlocksData();
+        $data = json_decode($json, true);
+    
+        return is_array($data) ? $data : [];
+    }
+    
+    private function saveBlocksArray($blocks)
+    {
+        $this->Wcms->set('config', 'olivaBlocksData', json_encode($blocks));
+    }
+
     private function createTextarea($doc, $name, $value, $rows = 6)
     {
         $textarea = $doc->createElement('textarea');
@@ -110,8 +123,75 @@ class OlivaBlocks
         $form->appendChild($title);
 
         // Prepare a field to hold the json code
-        $form->appendChild($this->createTextarea($doc, 'oliva_blocks_json', $this->getBlocksData(), 12));
-
+//        $form->appendChild($this->createTextarea($doc, 'oliva_blocks_json', $this->getBlocksData(), 12));
+        // Block type
+        $typeLabel = $doc->createElement('label', 'Block type');
+        $form->appendChild($typeLabel);
+        
+        $typeSelect = $doc->createElement('select');
+        $typeSelect->setAttribute('name', 'oliva_block_type');
+        $typeSelect->setAttribute('class', 'form-control');
+        
+        foreach (['text', 'image', 'text_image'] as $type) {
+            $option = $doc->createElement('option', $type);
+            $option->setAttribute('value', $type);
+            $typeSelect->appendChild($option);
+        }
+        
+        $form->appendChild($typeSelect);
+        
+        // Text field
+        $textLabel = $doc->createElement('label', 'Text');
+        $form->appendChild($textLabel);
+        
+        $textInput = $doc->createElement('input');
+        $textInput->setAttribute('type', 'text');
+        $textInput->setAttribute('name', 'oliva_block_text');
+        $textInput->setAttribute('class', 'form-control');
+        $form->appendChild($textInput);
+        
+        // URL field
+        $urlLabel = $doc->createElement('label', 'Image URL');
+        $form->appendChild($urlLabel);
+        
+        $urlInput = $doc->createElement('input');
+        $urlInput->setAttribute('type', 'text');
+        $urlInput->setAttribute('name', 'oliva_block_url');
+        $urlInput->setAttribute('class', 'form-control');
+        $form->appendChild($urlInput);
+        
+        // spacing
+        $form->appendChild($doc->createElement('br'));
+        $blocks = $this->getBlocksArray();
+        
+        if (!empty($blocks)) {
+            foreach ($blocks as $index => $block) {
+                $div = $doc->createElement('div');
+                $div->setAttribute('style', 'border:1px solid #ccc;padding:10px;margin-bottom:10px;');
+        
+                $text = 'Type: ' . ($block['type'] ?? '');
+                if (!empty($block['text'])) {
+                    $text .= ' | Text: ' . $block['text'];
+                }
+                if (!empty($block['url'])) {
+                    $text .= ' | URL: ' . $block['url'];
+                }
+        
+                $div->appendChild($doc->createTextNode($text));
+        
+                // delete button
+                $deleteBtn = $doc->createElement('button', 'Delete');
+                $deleteBtn->setAttribute('type', 'submit');
+                $deleteBtn->setAttribute('name', 'delete_block');
+                $deleteBtn->setAttribute('value', $index);
+                $deleteBtn->setAttribute('class', 'btn btn-danger btn-sm');
+                $deleteBtn->setAttribute('style', 'margin-left:10px;');
+        
+                $div->appendChild($deleteBtn);
+        
+                $form->appendChild($div);
+            }
+        }
         $saveButton = $doc->createElement('button');
         $saveButton->setAttribute('type', 'submit');
         $saveButton->setAttribute('name', 'saveOlivaBlocksSettings');
@@ -138,17 +218,30 @@ class OlivaBlocks
             return $args;
         }
 
+        $blocks = $this->getBlocksArray();
+        
+        // DELETE
+        if (isset($_POST['delete_block'])) {
+            $index = (int)$_POST['delete_block'];
+            unset($blocks[$index]);
+            $blocks = array_values($blocks);
+            $this->saveBlocksArray($blocks);
+        }
+        
+        // ADD
         if (isset($_POST['saveOlivaBlocksSettings'])) {
-            $json = $_POST['oliva_blocks_json'] ?? '[]';
         
-            json_decode($json, true);
+            $type = $_POST['oliva_block_type'] ?? 'text';
+            $text = $_POST['oliva_block_text'] ?? '';
+            $url  = $_POST['oliva_block_url'] ?? '';
         
-            if (json_last_error() === JSON_ERROR_NONE) {
-                $this->Wcms->set('config', 'olivaBlocksData', $json);
-            }
-            else {
-    			$this->Wcms->alert('danger', 'Content not saved on Oliva Blocks as rules of data validation not followed. Due to: '.json_last_error());
-            }
+            $blocks[] = [
+                'type' => $type,
+                'text' => $text,
+                'url'  => $url
+            ];
+        
+            $this->saveBlocksArray($blocks);
         }
 
         return $this->alterAdmin($args);
