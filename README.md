@@ -25,6 +25,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
+v0.6.2 04-05-2026 Inluded more translations  
 v0.6.1 04-05-2026 Missing ) in the code caused a fatal error  
 v0.6.0 04-05-2026 Included more language for backend: DE, FR, IT, ES. Reordering of information  
 v0.5.0 04-05-2026 Allow selection of blocks using a code  
@@ -75,4 +76,4 @@ Version 0.6.0 Translations and validations
 
 Version 0.6.1 Missing parenthesis caused a HTTP error 500 to show
 
-- Included more translations
+Version 0.6.2 Included more translations
