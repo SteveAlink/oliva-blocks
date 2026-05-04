@@ -80,6 +80,23 @@ class OlivaBlocks
 
     public function alterAdmin(array $args): array
     {
+        $blocks = $this->getBlocksArray();
+        
+        $editIndex = '';
+        $editBlock = [
+            'code' => '',
+            'type' => 'text',
+            'text' => '',
+            'url'  => ''
+        ];
+        
+        if (isset($_POST['edit_block'])) {
+            $editIndex = (int) $_POST['edit_block'];
+        
+            if (isset($blocks[$editIndex])) {
+                $editBlock = $blocks[$editIndex];
+            }
+        }
 
         $doc = new DOMDocument();
         @$doc->loadHTML(mb_convert_encoding($args[0], 'HTML-ENTITIES', 'UTF-8'));
@@ -122,6 +139,12 @@ class OlivaBlocks
         $title = $doc->createElement('h2', $this->t('headingBlocksSettings'));
         $form->appendChild($title);
 
+        $editInput = $doc->createElement('input');
+        $editInput->setAttribute('type', 'hidden');
+        $editInput->setAttribute('name', 'oliva_edit_index');
+        $editInput->setAttribute('value', (string) $editIndex);
+        $form->appendChild($editInput);
+        
         // Selection of type of block
         $typeLabel = $doc->createElement('label', $this->t('blockType'));
         $form->appendChild($typeLabel);
@@ -133,6 +156,9 @@ class OlivaBlocks
         foreach (['text', 'image', 'text_image'] as $type) {
             $option = $doc->createElement('option', $type);
             $option->setAttribute('value', $type);
+            if (($editBlock['type'] ?? 'text') === $type) {
+                $option->setAttribute('selected', 'selected');
+            }
             $typeSelect->appendChild($option);
         }
         
@@ -146,6 +172,7 @@ class OlivaBlocks
         $codeInput->setAttribute('type', 'text');
         $codeInput->setAttribute('name', 'oliva_block_code');
         $codeInput->setAttribute('class', 'form-control');
+        $codeInput->setAttribute('value', $editBlock['code'] ?? '');
         $form->appendChild($codeInput);
 
         $codeHelp = $doc->createElement('p', $this->t('helpBlockCode'));
@@ -160,6 +187,7 @@ class OlivaBlocks
         $textInput->setAttribute('type', 'text');
         $textInput->setAttribute('name', 'oliva_block_text');
         $textInput->setAttribute('class', 'form-control');
+        $textInput->setAttribute('value', $editBlock['text'] ?? '');
         $form->appendChild($textInput);
         
         // URL field
@@ -170,6 +198,7 @@ class OlivaBlocks
         $urlInput->setAttribute('type', 'text');
         $urlInput->setAttribute('name', 'oliva_block_url');
         $urlInput->setAttribute('class', 'form-control');
+        $urlInput->setAttribute('value', $editBlock['url'] ?? '');
         $form->appendChild($urlInput);
 
         $urlHelp = $doc->createElement('p', $this->t('helpBlockUrl'));
@@ -180,9 +209,19 @@ class OlivaBlocks
         $saveButton->setAttribute('type', 'submit');
         $saveButton->setAttribute('name', 'saveOlivaBlocksSettings');
         $saveButton->setAttribute('class', 'btn btn-primary');
-        $saveButton->nodeValue = $this->t('saveButton');
-
+        $saveButton->nodeValue = ($editIndex !== '') ? $this->t('updateButton') : $this->t('saveButton');
         $form->appendChild($saveButton);
+
+        if ($editIndex !== '') {
+            $cancelButton = $doc->createElement('button');
+            $cancelButton->setAttribute('type', 'submit');
+            $cancelButton->setAttribute('name', 'cancelEdit');
+            $cancelButton->setAttribute('class', 'btn btn-secondary');
+            $cancelButton->setAttribute('style', 'margin-left:10px;');
+            $cancelButton->nodeValue = $this->t('cancelButton');
+        
+            $form->appendChild($cancelButton);
+        }
 
         // Spacing
         $form->appendChild($doc->createElement('br'));
@@ -199,16 +238,16 @@ class OlivaBlocks
             foreach ($blocks as $index => $block) {
                 $div = $doc->createElement('div');
                 $div->setAttribute('style', 'border:1px solid #ccc;padding:10px;margin-bottom:10px;');
-        
-                $text = 'Code: ' . ($block['code'] ?? '') . ' | Type: ' . ($block['type'] ?? '');
-                if (!empty($block['text'])) {
-                    $text .= ' | Text: ' . $block['text'];
-                }
-                if (!empty($block['url'])) {
-                    $text .= ' | URL: ' . $block['url'];
-                }
-        
-                $div->appendChild($doc->createTextNode($text));
+
+                // EDIT
+                $editBtn = $doc->createElement('button', html_entity_decode('&#9998;', ENT_QUOTES, 'UTF-8'));
+                $editBtn->setAttribute('type', 'submit');
+                $editBtn->setAttribute('name', 'edit_block');
+                $editBtn->setAttribute('value', $index);
+                $editBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-info');
+                $editBtn->setAttribute('title', $this->t('editButton'));
+                $editBtn->setAttribute('style', 'margin-right:5px;');
+                $div->appendChild($editBtn);
 
                 // Include move buttons
                 if ($index > 0) {
@@ -216,7 +255,8 @@ class OlivaBlocks
                     $upBtn->setAttribute('type', 'submit');
                     $upBtn->setAttribute('name', 'move_block_up');
                     $upBtn->setAttribute('value', $index);
-                    $upBtn->setAttribute('class', 'btn btn-secondary btn-sm');
+                    $upBtn->setAttribute('class', 'arrowIcon upArrowIcon');
+//                    $upBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-info');
                     $upBtn->setAttribute('style', 'margin-left:10px;');
                     $div->appendChild($upBtn);
                 }
@@ -226,7 +266,8 @@ class OlivaBlocks
                     $downBtn->setAttribute('type', 'submit');
                     $downBtn->setAttribute('name', 'move_block_down');
                     $downBtn->setAttribute('value', $index);
-                    $downBtn->setAttribute('class', 'btn btn-secondary btn-sm');
+                    $downBtn->setAttribute('class', 'arrowIcon downArrowIcon');
+//                  $downBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-info');
                     $downBtn->setAttribute('style', 'margin-left:10px;');
                     $div->appendChild($downBtn);
                 }
@@ -236,11 +277,19 @@ class OlivaBlocks
                 $deleteBtn->setAttribute('type', 'submit');
                 $deleteBtn->setAttribute('name', 'delete_block');
                 $deleteBtn->setAttribute('value', $index);
-                $deleteBtn->setAttribute('class', 'btn btn-danger btn-sm');
+                $deleteBtn->setAttribute('class', 'wbtn wbtn-sm wbtn-danger');
                 $deleteBtn->setAttribute('style', 'margin-left:10px;');
-        
                 $div->appendChild($deleteBtn);
         
+                $text = 'Code: ' . ($block['code'] ?? '') . ' | Type: ' . ($block['type'] ?? '');
+                if (!empty($block['text'])) {
+                    $text .= ' | Text: ' . $block['text'];
+                }
+                if (!empty($block['url'])) {
+                    $text .= ' | URL: ' . $block['url'];
+                }
+                $div->appendChild($doc->createTextNode($text));
+
                 $form->appendChild($div);
             }
         }
@@ -318,13 +367,21 @@ class OlivaBlocks
                 return $args;
             }
         
-            $blocks[] = [
+            $newBlock = [
                 'code' => $code,
                 'type' => $type,
                 'text' => $text,
                 'url'  => $url
             ];
-        
+            
+            $editIndex = $_POST['oliva_edit_index'] ?? '';
+            
+            if ($editIndex !== '' && isset($blocks[(int) $editIndex])) {
+                $blocks[(int) $editIndex] = $newBlock;
+            } else {
+                $blocks[] = $newBlock;
+            }
+            
             $this->saveBlocksArray($blocks);
         }
 
