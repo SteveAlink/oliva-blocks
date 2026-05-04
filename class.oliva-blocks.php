@@ -209,9 +209,30 @@ class OlivaBlocks
                 }
         
                 $div->appendChild($doc->createTextNode($text));
-        
-                // delete button
-                $deleteBtn = $doc->createElement('button', 'Delete');
+
+                // Include move buttons
+                if ($index > 0) {
+                    $upBtn = $doc->createElement('button', $this->t('moveUpButton'));
+                    $upBtn->setAttribute('type', 'submit');
+                    $upBtn->setAttribute('name', 'move_block_up');
+                    $upBtn->setAttribute('value', $index);
+                    $upBtn->setAttribute('class', 'btn btn-secondary btn-sm');
+                    $upBtn->setAttribute('style', 'margin-left:10px;');
+                    $div->appendChild($upBtn);
+                }
+                
+                if ($index < count($blocks) - 1) {
+                    $downBtn = $doc->createElement('button', $this->t('moveDownButton'));
+                    $downBtn->setAttribute('type', 'submit');
+                    $downBtn->setAttribute('name', 'move_block_down');
+                    $downBtn->setAttribute('value', $index);
+                    $downBtn->setAttribute('class', 'btn btn-secondary btn-sm');
+                    $downBtn->setAttribute('style', 'margin-left:10px;');
+                    $div->appendChild($downBtn);
+                }
+
+                // Delete button
+                $deleteBtn = $doc->createElement('button', $this->t('Delete'));
                 $deleteBtn->setAttribute('type', 'submit');
                 $deleteBtn->setAttribute('name', 'delete_block');
                 $deleteBtn->setAttribute('value', $index);
@@ -255,7 +276,32 @@ class OlivaBlocks
             $blocks = array_values($blocks);
             $this->saveBlocksArray($blocks);
         }
+
+        // Handle the move buttons
+        if (isset($_POST['move_block_up'])) {
+            $index = (int) $_POST['move_block_up'];
         
+            if ($index > 0 && isset($blocks[$index], $blocks[$index - 1])) {
+                $temp = $blocks[$index - 1];
+                $blocks[$index - 1] = $blocks[$index];
+                $blocks[$index] = $temp;
+        
+                $this->saveBlocksArray($blocks);
+            }
+        }
+        
+        if (isset($_POST['move_block_down'])) {
+            $index = (int) $_POST['move_block_down'];
+        
+            if ($index < count($blocks) - 1 && isset($blocks[$index], $blocks[$index + 1])) {
+                $temp = $blocks[$index + 1];
+                $blocks[$index + 1] = $blocks[$index];
+                $blocks[$index] = $temp;
+        
+                $this->saveBlocksArray($blocks);
+            }
+        }
+
         // ADD
         if (isset($_POST['saveOlivaBlocksSettings'])) {
             $type = $_POST['oliva_block_type'] ?? 'text';
