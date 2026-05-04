@@ -6,8 +6,10 @@ Oliva Blocks gives the ability to add structured content blocks to a page, in Wo
 
 ## Overview
 This plugin helps you to organize blocks of text that will be use multiple times in various pages. Next to text  
-this plugin is also able to support images that will be placed on various pages.
-Use ```{{OlivaBlocks}}``` on any page to render the blocks.  
+this plugin is also able to support images that will be placed on various pages.  
+Use ```{{OlivaBlocks}}``` on any page to render the blocks. This will show all blocks on the page.  
+Use ```{{OlivaBlocks|Queens}}``` to show only the blocks of information that have as block code 'Queens'.  
+Be aware that the block code is case sensitive, so Queens is a different code from queens.
 
 ## Preview of the settings for this plugin:
 WIP
@@ -18,6 +20,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
+v0.5.0 04-05-2026 Allow selection of blocks using a code  
 v0.4.0 04-05-2026 Rendering on frontend can now use ```{{OlivaBlocks}}``` in any page. So moved out of footer  
 v0.3.0 04-05-2026 Rendering the blocks on the frontend on footer  
 v0.2.0 04-05-2026 Removal of JSON field. Replace by various type related fields  
@@ -50,3 +53,9 @@ Version 0.3.0 Rendering blocks on frontend
 Version 0.4.0 Rendering in any page on frontend
 
 - In previous versions, the rendering was done to the footer of a page, now it can be put on any page
+
+Version 0.5.0 Includes a code to connect to blocks of information
+
+- Per block type one is now able to enter a code
+- Using ```{{OlivaBlocks|code}}``` on a page will only show the blocks that have the include code as Block code.
+- Translations have been extended
