@@ -258,11 +258,19 @@ class OlivaBlocks
         
         // ADD
         if (isset($_POST['saveOlivaBlocksSettings'])) {
-        
             $type = $_POST['oliva_block_type'] ?? 'text';
             $code = trim($_POST['oliva_block_code'] ?? '');
             $text = $_POST['oliva_block_text'] ?? '';
             $url  = $_POST['oliva_block_url'] ?? '';
+            if ($type === 'text' && trim($text) === '') {
+                $this->Wcms->alert('danger', $this->t('errorTextNoText');
+                return $args;
+            }
+            
+            if ($type === 'image' && trim($url) === '') {
+                $this->Wcms->alert('danger', $this->t('errorImageNoUrl');
+                return $args;
+            }
         
             $blocks[] = [
                 'code' => $code,
@@ -321,6 +329,11 @@ class OlivaBlocks
         }
     
         $html .= '</div>';
+
+        // If nothing to show, don't wast space on a page
+        if ($html === '<div class="oliva-blocks"></div>') {
+            return '';
+        }
     
         return $html;
     }
@@ -330,6 +343,7 @@ class OlivaBlocks
         $type = $block['type'] ?? '';
         $text = htmlspecialchars($block['text'] ?? '', ENT_QUOTES, 'UTF-8');
         $url  = htmlspecialchars($block['url'] ?? '', ENT_QUOTES, 'UTF-8');
+        $url = filter_var($url, FILTER_SANITIZE_URL);
     
         if ($type === 'text') {
             return '
