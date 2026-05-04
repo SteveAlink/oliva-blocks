@@ -17,7 +17,7 @@ Reordering of a block is possible using the indicated buttons.
 If the placeholder ```{{OlivaBlocks|...}}``` is used, the block information will be inserted in the page. So it replaces the placeholder.
 
 ## Preview of the settings for this plugin:
-<img width="2003" height="1651" alt="WcmsOlivaBlocksPreviewSettings063" src="https://github.com/user-attachments/assets/97c4f159-ff94-42a6-8120-b9be46a60398" />
+<img width="1908" height="1757" alt="image" src="https://github.com/user-attachments/assets/49dbb223-66a6-4800-be06-88785d947995" />
 
 ## Download the plugin via
 ```text
@@ -25,6 +25,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
+v0.7.3 05-05-2026 Tooltip on buttons in list of block information  
 v0.7.2 05-05-2026 Twice block information shown, now one  
 v0.7.1 04-05-2026 Cleaner UI for list of block information  
 v0.7.0 04-05-2026 Introduction of editing of block information  
@@ -93,3 +94,5 @@ Version 0.7.0 Introduction of editing information
 Version 0.7.1 Cleaner use of icons in list of block information
 
 Version 0.7.2 The text and/or url where shown twice
+
+Version 0.7.3 Buttons now have tooltips
