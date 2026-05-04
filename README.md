@@ -17,7 +17,7 @@ Reordering of a block is possible using the indicated buttons.
 If the placeholder ```{{OlivaBlocks|...}}``` is used, the block information will be inserted in the page. So it replaces the placeholder.
 
 ## Preview of the settings for this plugin:
-<img width="1999" height="1659" alt="WcmsOlivaBlocksPreviewSettings050" src="https://github.com/user-attachments/assets/06229928-9711-4f36-91cf-370564ba4924" />
+<img width="1997" height="1659" alt="WcmsOlivaBlocksPreviewSettings063" src="https://github.com/user-attachments/assets/324cb3b3-30d3-48cc-8c1e-0006a3813a9e" />
 
 ## Download the plugin via
 ```text
