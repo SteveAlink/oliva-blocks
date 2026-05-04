@@ -21,6 +21,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
+v0.6.0 04-05-2026 Included more language for backend: DE, FR, IT, ES  
 v0.5.0 04-05-2026 Allow selection of blocks using a code  
 v0.4.0 04-05-2026 Rendering on frontend can now use ```{{OlivaBlocks}}``` in any page. So moved out of footer  
 v0.3.0 04-05-2026 Rendering the blocks on the frontend on footer  
@@ -60,3 +61,8 @@ Version 0.5.0 Includes a code to connect to blocks of information
 - Per block type one is now able to enter a code
 - Using ```{{OlivaBlocks|code}}``` on a page will only show the blocks that have the include code as Block code.
 - Translations have been extended
+
+Version 0.6.0 Translations and validations
+
+- Four languages are now included for the backend  
+- Validation build in to check if correct fields are filled  
