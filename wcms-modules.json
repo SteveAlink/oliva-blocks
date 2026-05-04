@@ -6,7 +6,7 @@
             "repo": "https://github.com/SteveAlink/oliva-blocks/tree/main",
             "zip": "https://github.com/SteveAlink/oliva-blocks/archive/main.zip",
             "summary": "Supporting blocks of information that can be reused on multiple pages",
-            "version": "0.5.0",
+            "version": "0.6.0",
             "image": "https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/preview.png"
         }
     }
