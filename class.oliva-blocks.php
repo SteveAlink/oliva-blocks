@@ -123,7 +123,7 @@ class OlivaBlocks
         $form->appendChild($title);
 
         // Selection of type of block
-        $typeLabel = $doc->createElement('label', $this->t('BlockType'));
+        $typeLabel = $doc->createElement('label', $this->t('blockType'));
         $form->appendChild($typeLabel);
         
         $typeSelect = $doc->createElement('select');
@@ -153,7 +153,7 @@ class OlivaBlocks
         $form->appendChild($codeHelp);
 
         // Content of Text field
-        $textLabel = $doc->createElement('label', $this->t('BlockText'));
+        $textLabel = $doc->createElement('label', $this->t('blockText'));
         $form->appendChild($textLabel);
         
         $textInput = $doc->createElement('input');
@@ -163,7 +163,7 @@ class OlivaBlocks
         $form->appendChild($textInput);
         
         // URL field
-        $urlLabel = $doc->createElement('label', $this->t('ImageURL'));
+        $urlLabel = $doc->createElement('label', $this->t('blockURL'));
         $form->appendChild($urlLabel);
         
         $urlInput = $doc->createElement('input');
@@ -232,7 +232,7 @@ class OlivaBlocks
                 }
 
                 // Delete button
-                $deleteBtn = $doc->createElement('button', $this->t('Delete'));
+                $deleteBtn = $doc->createElement('button', $this->t('deleteButton'));
                 $deleteBtn->setAttribute('type', 'submit');
                 $deleteBtn->setAttribute('name', 'delete_block');
                 $deleteBtn->setAttribute('value', $index);
