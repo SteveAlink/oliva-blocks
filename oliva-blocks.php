@@ -15,6 +15,6 @@ require_once __DIR__ . '/class.oliva-blocks.php';
 $olivaBlocks = new OlivaBlocks($Wcms);
 
 $Wcms->addListener('settings', [$olivaBlocks, 'handleSettings']);
-$Wcms->addListener('footer', [$olivaBlocks, 'renderBlocks']);
+$Wcms->addListener('page', [$olivaBlocks, 'renderBlocks']);
 $Wcms->addListener('css', [$olivaBlocks, 'renderCss']);
 $Wcms->addListener('js', [$olivaBlocks, 'renderJs']);
