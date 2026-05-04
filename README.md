@@ -17,6 +17,7 @@ https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
+v0.3.0 04-05-2026 Rendering the blocks on the frontend  
 v0.2.0 04-05-2026 Removal of JSON field. Replace by various type related fields  
 v0.1.2 03-05-2026 Check if value passed missing, causing blank screen   
 v0.1.1 03-05-2026 Something wrong with one of the programs causing blank screen  
@@ -38,4 +39,8 @@ Version 0.1.2 Contains bug solution
 Version 0.2.0 Other fields in Settings
 
 - The tab Oliva Blocks now contain an option to select the type of content
-- Where there used to be a field to enter, following a strict syntax, this has now been replaced  
+- Where there used to be a field to enter, following a strict syntax, this has now been replaced
+
+Version 0.3.0 Rendering blocks on frontend
+
+- Whilst this is still a pre-version, all the available blocks will be rendered
