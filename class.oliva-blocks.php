@@ -271,7 +271,7 @@ class OlivaBlocks
                 }
 
                 // Delete button
-                $deleteBtn = $doc->createElement('button', $this->t('deleteButton'));
+                $deleteBtn = $doc->createElement('button', html_entity_decode('&#128465;', ENT_QUOTES, 'UTF-8'));
                 $deleteBtn->setAttribute('type', 'submit');
                 $deleteBtn->setAttribute('name', 'delete_block');
                 $deleteBtn->setAttribute('value', $index);
