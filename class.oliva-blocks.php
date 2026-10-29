@@ -422,7 +422,8 @@ class OlivaBlocks
 
     public function renderBlocks($args)
     {
-        if (!isset($args[0])) {
+        // Logged in, the content is the editable source: expanding it here would save the blocks over the placeholder
+        if (!isset($args[0]) || $this->Wcms->loggedIn) {
             return $args;
         }
     
