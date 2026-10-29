@@ -144,6 +144,12 @@ class OlivaBlocks
         $editInput->setAttribute('name', 'oliva_edit_index');
         $editInput->setAttribute('value', (string) $editIndex);
         $form->appendChild($editInput);
+
+        $tokenInput = $doc->createElement('input');
+        $tokenInput->setAttribute('type', 'hidden');
+        $tokenInput->setAttribute('name', 'token');
+        $tokenInput->setAttribute('value', $this->Wcms->getToken());
+        $form->appendChild($tokenInput);
         
         // Selection of type of block
         $typeLabel = $doc->createElement('label', $this->t('blockType'));
@@ -336,6 +342,10 @@ class OlivaBlocks
     {
         if (!$this->Wcms->loggedIn) {
             return $args;
+        }
+
+        if (!$this->Wcms->verifyFormActions()) {
+            return $this->alterAdmin($args);
         }
 
         $blocks = $this->getBlocksArray();
