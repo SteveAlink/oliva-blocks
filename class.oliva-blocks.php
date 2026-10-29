@@ -48,7 +48,7 @@ class OlivaBlocks
     private function getBlocksData()
     {
         $currentJson = $this->Wcms->get('config', 'olivaBlocksData');
-        if (!$currentJson) {
+        if (!is_string($currentJson)) {
             $currentJson = "[]";
         }
         return $currentJson;
