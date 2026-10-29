@@ -522,7 +522,7 @@ class OlivaBlocks
 
     function olivaBlocksPluginBasePath()
     {
-        return 'plugins/oliva-blocks/';
+        return $this->Wcms->url('plugins/oliva-blocks/');
     }
 
     public function renderCss($args)
