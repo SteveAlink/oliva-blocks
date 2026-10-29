@@ -99,7 +99,7 @@ class OlivaBlocks
         }
 
         $doc = new DOMDocument();
-        @$doc->loadHTML(mb_convert_encoding($args[0], 'HTML-ENTITIES', 'UTF-8'));
+        @$doc->loadHTML(mb_encode_numericentity($args[0], [0x80, 0x10FFFF, 0, 0x1FFFFF], 'UTF-8'));
 
         $currentPage = $doc->getElementById('currentPage');
 
