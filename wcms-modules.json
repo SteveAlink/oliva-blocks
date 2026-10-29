@@ -3,11 +3,11 @@
     "plugins": {
         "oliva-blocks": {
             "name": "Oliva Blocks",
-            "repo": "https://github.com/SteveAlink/oliva-blocks/tree/main",
-            "zip": "https://github.com/SteveAlink/oliva-blocks/archive/main.zip",
-            "summary": "Supporting blocks of information that can be reused on multiple pages",
-            "version": "0.7.3",
-            "image": "https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/preview.png"
+            "repo": "https://github.com/robiso/oliva-blocks/tree/main",
+            "zip": "https://github.com/robiso/oliva-blocks/archive/main.zip",
+            "summary": "Supporting blocks of information that can be reused on multiple pages. Created by Steve Alink.",
+            "version": "0.7.4",
+            "image": "https://raw.githubusercontent.com/robiso/oliva-blocks/main/preview.png"
         }
     }
 }
