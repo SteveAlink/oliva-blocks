@@ -1,12 +1,6 @@
 # Oliva Blocks
-------------------------------------------------
-### DO NOT USE PLUGIN
-### BLANK PAGE IS ONLY RESULT
-### WIP
-### SORRY FOR ANY INCONVINIENCE
-------------------------------------------------
 
-By Steve Alink for Oliva Solutions.
+By Steve Alink for Oliva Solutions. This copy is the WonderCMS project's fork of [SteveAlink/oliva-blocks](https://github.com/SteveAlink/oliva-blocks), kept so the plugin can be installed from the WonderCMS plugin list; all credit for the plugin goes to Steve.
 
 Oliva Blocks gives the ability to add structured content blocks to a page, in WonderCMS, without touching HTML.
 
@@ -20,17 +14,20 @@ You can leave the block code blank.
 Reordering of a block is possible using the indicated buttons.  
 
 ## Note
-If the placeholder ```{{OlivaBlocks|...}}``` is used, the block information will be inserted in the page. So it replaces the placeholder.
+If the placeholder ```{{OlivaBlocks|...}}``` is used, the block information will be inserted in the page. So it replaces the placeholder.  
+While you are logged in you see the placeholder itself, so editing the page keeps it; log out (or use a private window) to see the blocks.  
+```{{OlivaBlocks}}``` without a code shows every block, also blocks you made for a private page only. On public pages, use a code.
 
 ## Preview of the settings for this plugin:
 <img width="1908" height="1757" alt="image" src="https://github.com/user-attachments/assets/49dbb223-66a6-4800-be06-88785d947995" />
 
 ## Download the plugin via
 ```text
-https://raw.githubusercontent.com/SteveAlink/oliva-blocks/main/wcms-modules.json
+https://raw.githubusercontent.com/robiso/oliva-blocks/main/wcms-modules.json
 ```
 
 ## Versions
+v0.7.4 29-10-2026 Works on WonderCMS 3.6.0 and 3.7.0: no more blank page, settings protected by the WonderCMS token, placeholder kept while editing, stylesheet found on subpages  
 v0.7.3 05-05-2026 Tooltip on buttons in list of block information  
 v0.7.2 05-05-2026 Twice block information shown, now one  
 v0.7.1 04-05-2026 Cleaner UI for list of block information  
@@ -102,3 +99,11 @@ Version 0.7.1 Cleaner use of icons in list of block information
 Version 0.7.2 The text and/or url where shown twice
 
 Version 0.7.3 Buttons now have tooltips
+
+Version 0.7.4 Works on WonderCMS 3.6.0 and 3.7.0
+
+- The blank page came from the plugin file using `$Wcms` without `global $Wcms;` (WonderCMS includes plugins inside a method), and, once logged in, from an empty stored value being passed to `json_decode()`
+- The settings form carries the WonderCMS token; a form posted from another site no longer adds, moves or deletes blocks
+- While logged in the placeholder is shown instead of the blocks, so saving the page no longer replaces the placeholder with a copy of the blocks
+- The stylesheet link is absolute, so it also loads on subpages
+- No PHP 8.2+ deprecation from `mb_convert_encoding()` with `HTML-ENTITIES`

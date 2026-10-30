@@ -12,6 +12,7 @@ if (!defined('VERSION')) {
 
 require_once __DIR__ . '/class.oliva-blocks.php';
 
+global $Wcms;
 $olivaBlocks = new OlivaBlocks($Wcms);
 
 $Wcms->addListener('settings', [$olivaBlocks, 'handleSettings']);

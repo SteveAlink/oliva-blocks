@@ -48,7 +48,7 @@ class OlivaBlocks
     private function getBlocksData()
     {
         $currentJson = $this->Wcms->get('config', 'olivaBlocksData');
-        if (!$currentJson) {
+        if (!is_string($currentJson)) {
             $currentJson = "[]";
         }
         return $currentJson;
@@ -99,7 +99,7 @@ class OlivaBlocks
         }
 
         $doc = new DOMDocument();
-        @$doc->loadHTML(mb_convert_encoding($args[0], 'HTML-ENTITIES', 'UTF-8'));
+        @$doc->loadHTML(mb_encode_numericentity($args[0], [0x80, 0x10FFFF, 0, 0x1FFFFF], 'UTF-8'));
 
         $currentPage = $doc->getElementById('currentPage');
 
@@ -144,6 +144,12 @@ class OlivaBlocks
         $editInput->setAttribute('name', 'oliva_edit_index');
         $editInput->setAttribute('value', (string) $editIndex);
         $form->appendChild($editInput);
+
+        $tokenInput = $doc->createElement('input');
+        $tokenInput->setAttribute('type', 'hidden');
+        $tokenInput->setAttribute('name', 'token');
+        $tokenInput->setAttribute('value', $this->Wcms->getToken());
+        $form->appendChild($tokenInput);
         
         // Selection of type of block
         $typeLabel = $doc->createElement('label', $this->t('blockType'));
@@ -338,6 +344,10 @@ class OlivaBlocks
             return $args;
         }
 
+        if (!$this->Wcms->verifyFormActions()) {
+            return $this->alterAdmin($args);
+        }
+
         $blocks = $this->getBlocksArray();
         
         // DELETE
@@ -412,7 +422,8 @@ class OlivaBlocks
 
     public function renderBlocks($args)
     {
-        if (!isset($args[0])) {
+        // Logged in, the content is the editable source: expanding it here would save the blocks over the placeholder
+        if (!isset($args[0]) || $this->Wcms->loggedIn) {
             return $args;
         }
     
@@ -511,7 +522,7 @@ class OlivaBlocks
 
     function olivaBlocksPluginBasePath()
     {
-        return 'plugins/oliva-blocks/';
+        return $this->Wcms->url('plugins/oliva-blocks/');
     }
 
     public function renderCss($args)
